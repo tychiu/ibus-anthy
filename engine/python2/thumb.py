@@ -630,9 +630,9 @@ class ThumbShiftSegment(segment.Segment):
         if enchar == u'\0' or enchar == u'':
             return []
         if self._jachars == u'':
-            if 0x21 <= enchars <= 0x7e:
+            if 0x21 <= enchar <= 0x7e:
                 self._enchars = enchar
-                self._jachars = segment.unichar_half_to_full(enchars)
+                self._jachars = segment.unichar_half_to_full(enchar)
             else:
                 self._enchars = self._r_table.get(enchar, u'')
                 self._jachars = enchar
