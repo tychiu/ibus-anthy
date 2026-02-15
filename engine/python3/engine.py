@@ -248,6 +248,8 @@ class Engine(IBus.EngineSimple):
         self._H = 0
         self._RMM = 0
         self._RSS = 0
+        self._MS = 0 # modifier state
+        self._CM = 0 # command memory
         if self.__idle_id != 0:
             GLib.source_remove(self.__idle_id)
             self.__idle_id = 0
@@ -1822,9 +1824,8 @@ class Engine(IBus.EngineSimple):
                 return ret
             except:
                 pass
-
-        def cmd_exec(keyval, state=0):
-            key = self._mk_key(keyval, state)
+        
+        def __cmd_exec(key, keyval, state):
             for cmd in self.__keybind.get(key, []):
                 if config.DEBUG:
                     print('cmd =', cmd)
@@ -1834,6 +1835,30 @@ class Engine(IBus.EngineSimple):
                 except Exception as err:
                     printerr('Error command: %s: %s' % (cmd, str(err)))
             return False
+
+        def cmd_exec(keyval, state=0):
+            key = self._mk_key(keyval, state)
+            pair = eval(key)
+            self._MS = pair[0]
+            self._CM = pair[1]
+            return __cmd_exec(key, keyval, state)
+
+        def cmd_term(keyval, state=0):
+            if self._MS == 0 and self._CM == 0:
+                return False
+
+            key = self._mk_key(keyval, state)
+            pair = eval(key)
+
+            prev_keyval = self._CM | IBus.ModifierType.RELEASE_MASK
+            prev_state = self._MS | IBus.ModifierType.RELEASE_MASK
+            prev_key = repr([int(prev_state), int(prev_keyval)])
+
+            self._MS = 0
+            self._CM = 0
+
+            __cmd_exec(prev_key, prev_keyval, prev_state)
+            return __cmd_exec(key, pair[1], pair[0])
 
         def RS():
             return self.__thumb.get_rs()
@@ -1869,6 +1894,12 @@ class Engine(IBus.EngineSimple):
                 self._RSS = 0
             elif keyval == self._RMM:
                 self._RMM = 0
+            elif keyval not in self.__thumb.get_chars() or state != 0:
+                if cmd_term(keyval, state):
+                    return True
+                elif not self.__preedit_ja_string.is_empty():
+                    return True
+                return False
         else:
             if keyval in [LS(), RS()] and state == 0:
                 if self._SS:
