@@ -1875,6 +1875,7 @@ class Engine(IBus.EngineSimple):
         state = state & (IBus.ModifierType.SHIFT_MASK |
                          IBus.ModifierType.CONTROL_MASK |
                          IBus.ModifierType.MOD1_MASK |
+                         IBus.ModifierType.MOD4_MASK |
                          IBus.ModifierType.RELEASE_MASK)
 
         if keyval in KP_Table and self.__prefs.get_value('common',
@@ -1949,7 +1950,9 @@ class Engine(IBus.EngineSimple):
                 if cmd_exec(keyval, state):
                     return True
                 elif 0x21 <= keyval <= 0x7e and state & \
-                        (IBus.ModifierType.CONTROL_MASK | IBus.ModifierType.MOD1_MASK) == 0:
+                        (IBus.ModifierType.CONTROL_MASK | \
+                         IBus.ModifierType.MOD1_MASK | \
+                         IBus.ModifierType.MOD4_MASK) == 0:
                     if state & IBus.ModifierType.SHIFT_MASK:
                         insert(self.__thumb.get_shift_char(keyval, chr(keyval)))
                     elif self._SS == 0:
