@@ -85,23 +85,29 @@ endif
 era.t: era.stamp
 
 era.stamp:
+	make_era_t=0; \
 	if test -f $(srcdir)/era.t ; then \
-	    if ! $(srcdir)/era.py --check $(srcdir)/era.t ; then \
+	    if ! $(PYTHON) $(srcdir)/era.py --check $(srcdir)/era.t ; then \
 	        rm $(srcdir)/era.t; \
-	        $(srcdir)/era.py $(srcdir)/era.t.in \
-                    --output $(builddir)/era.t; \
-	        echo "Generate era.t"; \
+	        make_era_t=1; \
 	    fi; \
+	else \
+	    make_era_t=1; \
+	fi; \
+	if test $$make_era_t -eq 1 ; then \
+	    if ! $(PYTHON) $(srcdir)/era.py $(srcdir)/era.t.in \
+	        --output $(builddir)/era.t ; then \
+	        exit 1; \
+	    fi; \
+	    echo "Generate era.t"; \
 	fi; \
 	touch era.stampT; \
 	mv era.stampT era.stamp;
 
 check:
-	if test -f $(srcdir)/era.t ; then \
-	    $(srcdir)/era.py --check $(srcdir)/era.t; \
-	else \
-	    $(srcdir)/era.py --check $(builddir)/era.t; \
-	fi
+	file=$(builddir)/era.t; \
+	test -f "$$file" || file=$(srcdir)/era.t; \
+	$(PYTHON) $(srcdir)/era.py --check "$$file";
 
 install-data-hook:
 	if test -z "$(DESTDIR)"; then \
