@@ -1945,8 +1945,8 @@ class Engine(IBus.EngineSimple):
                 if cmd_exec(keyval, state):
                     return True
                 elif 0x21 <= keyval <= 0x7e and state & \
-                        (IBus.ModifierType.CONTROL_MASK | \
-                         IBus.ModifierType.MOD1_MASK | \
+                        (IBus.ModifierType.CONTROL_MASK |
+                         IBus.ModifierType.MOD1_MASK |
                          IBus.ModifierType.MOD4_MASK) == 0:
                     if state & IBus.ModifierType.SHIFT_MASK:
                         insert(self.__thumb.get_shift_char(keyval, chr(keyval)))
