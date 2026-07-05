@@ -86,9 +86,9 @@ era.t: era.stamp
 
 era.stamp:
 	if test -f $(srcdir)/era.t ; then \
-	    if ! $(srcdir)/era.py --check $(srcdir)/era.t ; then \
+	    if ! $(PYTHON) $(srcdir)/era.py --check $(srcdir)/era.t ; then \
 	        rm $(srcdir)/era.t; \
-	        $(srcdir)/era.py $(srcdir)/era.t.in \
+	        $(PYTHON) $(srcdir)/era.py $(srcdir)/era.t.in \
                     --output $(builddir)/era.t; \
 	        echo "Generate era.t"; \
 	    fi; \
@@ -98,9 +98,9 @@ era.stamp:
 
 check:
 	if test -f $(srcdir)/era.t ; then \
-	    $(srcdir)/era.py --check $(srcdir)/era.t; \
+	    $(PYTHON) $(srcdir)/era.py --check $(srcdir)/era.t; \
 	else \
-	    $(srcdir)/era.py --check $(builddir)/era.t; \
+	    $(PYTHON) $(srcdir)/era.py --check $(builddir)/era.t; \
 	fi
 
 install-data-hook:
