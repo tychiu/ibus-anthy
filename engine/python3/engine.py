@@ -4,7 +4,7 @@
 # ibus-anthy - The Anthy engine for IBus
 #
 # Copyright (c) 2007-2008 Peng Huang <shawn.p.huang@gmail.com>
-# Copyright (c) 2010-2024 Takao Fujiwara <takao.fujiwara1@gmail.com>
+# Copyright (c) 2010-2026 Takao Fujiwara <takao.fujiwara1@gmail.com>
 # Copyright (c) 2007-2018 Red Hat, Inc.
 #
 # This program is free software; you can redistribute it and/or modify
@@ -29,7 +29,7 @@ import signal
 import sys
 from gettext import dgettext
 
-from main import get_userhome
+from main import get_userhome, ibus_check_version
 
 try:
     from locale import getpreferredencoding
@@ -116,6 +116,7 @@ for k, v in zip(['KEY_KP_Add', 'KEY_KP_Decimal', 'KEY_KP_Divide', 'KEY_KP_Enter'
     KP_Table[getattr(IBus, k)] = getattr(IBus, v)
 
 class Engine(IBus.EngineSimple):
+    __gtype_name__ = 'IBusEngineAnthy'
     __input_mode = None
     __typing_mode = None
     __segment_mode = None
@@ -129,12 +130,12 @@ class Engine(IBus.EngineSimple):
 
     def __init__(self, bus, object_path):
         if hasattr(IBus.Engine.props, 'has_focus_id'):
-            super(Engine, self).__init__(engine_name="anthy",
+            super(Engine, self).__init__(engine_name='anthy',
                                          connection=bus.get_connection(),
                                          object_path=object_path,
                                          has_focus_id=True)
         else:
-            super(Engine, self).__init__(engine_name="anthy",
+            super(Engine, self).__init__(engine_name='anthy',
                                          connection=bus.get_connection(),
                                          object_path=object_path)
 
@@ -151,6 +152,7 @@ class Engine(IBus.EngineSimple):
         self.__prop_dict = {}
         self.__input_purpose = 0
         self.__has_input_purpose = False
+        self.__has_preedit_format_hint = False
         # OSK mode is designed for OSK on gnome-shell, which always shows
         # IBus lookup window prior to the preedit and selecting a candidate
         # causes the commmit instead of the selection.
@@ -164,10 +166,12 @@ class Engine(IBus.EngineSimple):
             self.__is_utf8 = False
         self.__has_update_preedit_text_with_mode = True
         try:
-            self.__ibus_check_version('1.3')
+            ibus_check_version('1.3')
         except ValueError as e:
             printerr('Disable update_preedit_text_with_mode(): %s' % str(e))
             self.__has_update_preedit_text_with_mode = False
+        if hasattr(IBus, 'attr_hint_new'):
+            self.__has_preedit_format_hint = True
 
 #        self.__lookup_table = ibus.LookupTable.new(page_size=9,
 #                                                   cursor_pos=0,
@@ -186,6 +190,11 @@ class Engine(IBus.EngineSimple):
         # loop infinitely if this class overrides it.
         # self.process_key_event is not accessible too.
         self.connect('process-key-event', self.__process_key_event)
+        self.connect('focus-in', self.__focus_in)
+        # flashing compose sequence in GNOME instead of system bell
+        self.connect('focus-in-id', self.__focus_in_id)
+        self.connect('focus-out', self.__focus_out)
+        self.connect('focus-out-id', self.__focus_out_id)
         self.connect('destroy', self.__destroy)
         self.connect('page-down', self.__page_down)
         self.connect('page-up', self.__page_up)
@@ -195,14 +204,6 @@ class Engine(IBus.EngineSimple):
         # use reset to init values
         self.__reset()
 
-
-    def __ibus_check_version(self, v):
-        major = IBus.MAJOR_VERSION
-        minor = IBus.MINOR_VERSION
-        micro = IBus.MICRO_VERSION
-        if (major, minor, micro) < tuple(map(int, (v.split('.')))):
-            raise ValueError('Required ibus %s but version of ibus is ' \
-                             '%d.%d.%d' % (v, major, minor, micro))
 
     # http://en.sourceforge.jp/ticket/browse.php?group_id=14&tid=33075
     def __verify_anthy_journal_file(self):
@@ -1061,13 +1062,10 @@ class Engine(IBus.EngineSimple):
     def __rgb(self, r, g, b):
         return self.__argb(255, r, g, b)
 
-    def do_focus_in(self):
-        self.do_focus_in_id(None, None)
+    def __focus_in(self, obj):
+        self.__focus_in_id(obj, None, None)
 
-    def do_focus_out(self):
-        self.do_focus_out_id(None)
-
-    def do_focus_in_id(self, object_path, client):
+    def __focus_in_id(self, obj, object_path, client):
         self.register_properties(self.__prop_list)
         self.__refresh_typing_mode_property()
         mode = self.__prefs.get_value('common', 'behavior-on-focus-out')
@@ -1079,7 +1077,10 @@ class Engine(IBus.EngineSimple):
         if size != self.__lookup_table.get_page_size():
             self.__lookup_table.set_page_size(size)
 
-    def do_focus_out_id(self, object_path):
+    def __focus_out(self, obj):
+        self.__focus_out_id(obj, None)
+
+    def __focus_out_id(self, obj, object_path):
         if self.__has_input_purpose:
             self.__input_purpose = 0
         mode = self.__prefs.get_value('common', 'behavior-on-focus-out')
@@ -1237,9 +1238,14 @@ class Engine(IBus.EngineSimple):
     def __update_input_chars(self):
         text, cursor = self.__get_preedit()
         attrs = IBus.AttrList()
-        attrs.append(IBus.attr_underline_new(
-            IBus.AttrUnderline.SINGLE, 0,
-            len(text)))
+        if self.__has_preedit_format_hint:
+            attrs.append(IBus.attr_hint_new(
+                    IBus.AttrPreedit.WHOLE, 0,
+                    len(text)))
+        else:
+            attrs.append(IBus.attr_underline_new(
+                    IBus.AttrUnderline.SINGLE, 0,
+                    len(text)))
 
         self.update_preedit(text,
             attrs, cursor, not self.__preedit_ja_string.is_empty())
@@ -1289,12 +1295,18 @@ class Engine(IBus.EngineSimple):
             text = text.capitalize()
         self.__convert_chars = text
         attrs = IBus.AttrList()
-        attrs.append(IBus.attr_underline_new(
-            IBus.AttrUnderline.SINGLE, 0, len(text)))
-        attrs.append(IBus.attr_background_new(self.__rgb(200, 200, 240),
-            0, len(text)))
-        attrs.append(IBus.attr_foreground_new(self.__rgb(0, 0, 0),
-            0, len(text)))
+        if self.__has_preedit_format_hint:
+            attrs.append(IBus.attr_hint_new(
+                    IBus.AttrPreedit.WHOLE, 0, len(text)))
+            attrs.append(IBus.attr_hint_new(
+                    IBus.AttrPreedit.SELECTION, 0, len(text)))
+        else:
+            attrs.append(IBus.attr_underline_new(
+                    IBus.AttrUnderline.SINGLE, 0, len(text)))
+            attrs.append(IBus.attr_background_new(self.__rgb(200, 200, 240),
+                    0, len(text)))
+            attrs.append(IBus.attr_foreground_new(self.__rgb(0, 0, 0),
+                    0, len(text)))
         self.update_preedit(text, attrs, len(text), True)
 
         self.update_aux_string('',
@@ -1310,12 +1322,20 @@ class Engine(IBus.EngineSimple):
             if i < self.__cursor_pos:
                 pos += len(text)
         attrs = IBus.AttrList()
-        attrs.append(IBus.attr_underline_new(
-            IBus.AttrUnderline.SINGLE, 0, len(self.__convert_chars)))
-        attrs.append(IBus.attr_background_new(self.__rgb(200, 200, 240),
-                pos, pos + len(self.__segments[self.__cursor_pos][1])))
-        attrs.append(IBus.attr_foreground_new(self.__rgb(0, 0, 0),
-                pos, pos + len(self.__segments[self.__cursor_pos][1])))
+        if self.__has_preedit_format_hint:
+            attrs.append(IBus.attr_hint_new(
+                    IBus.AttrPreedit.WHOLE, 0, len(self.__convert_chars)))
+            attrs.append(IBus.attr_hint_new(
+                    IBus.AttrPreedit.SELECTION,
+                    pos,
+                    pos + len(self.__segments[self.__cursor_pos][1])))
+        else:
+            attrs.append(IBus.attr_underline_new(
+                    IBus.AttrUnderline.SINGLE, 0, len(self.__convert_chars)))
+            attrs.append(IBus.attr_background_new(self.__rgb(200, 200, 240),
+                    pos, pos + len(self.__segments[self.__cursor_pos][1])))
+            attrs.append(IBus.attr_foreground_new(self.__rgb(0, 0, 0),
+                    pos, pos + len(self.__segments[self.__cursor_pos][1])))
         self.update_preedit(self.__convert_chars, attrs, pos, True)
         aux_string = '( %d / %d )' % (self.__lookup_table.get_cursor_pos() + 1, self.__lookup_table.get_number_of_candidates())
         self.update_aux_string(aux_string,
@@ -1374,8 +1394,14 @@ class Engine(IBus.EngineSimple):
                     self.__lookup_table_visible = False
             elif self.__segments[self.__cursor_pos][0] != \
                     NTH_UNCONVERTED_CANDIDATE:
-                buf = self.__context.get_segment(self.__cursor_pos,
-                                                 NTH_UNCONVERTED_CANDIDATE)
+                # Test case: Type "watashi", Tab, Backspace
+                if self.__convert_mode == CONV_MODE_PREDICTION:
+                    # self.__context.get_prediction(NTH_UNCONVERTED_CANDIDATE)
+                    # is always None so use the preedit instead.
+                    buf, cursor = self.__preedit_ja_string.get_hiragana(True)
+                else:
+                    buf = self.__context.get_segment(self.__cursor_pos,
+                                                     NTH_UNCONVERTED_CANDIDATE)
                 self.__segments[self.__cursor_pos] = \
                     NTH_UNCONVERTED_CANDIDATE, buf
             #elif self._chk_mode('25'):

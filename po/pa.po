@@ -3,20 +3,18 @@
 # Copyright (C) 2008-2026 Takao Fujiwara <takao.fujiwara1@gmail.com>
 # This file is distributed under the same license as the ibus-anthy package.
 #
-# ButterflyOfFire <butterflyoffire@users.noreply.translate.fedoraproject.org>, 2024, 2025, 2026.
-# Weblate Translation Memory <noreply-mt-weblate-translation-memory@weblate.org>, 2025.
-# Moonshadow <starlight@users.noreply.translate.fedoraproject.org>, 2025.
+# Languages add-on <noreply-addon-languages@weblate.org>, 2026.
+# A S Alam <aalam@users.noreply.translate.fedoraproject.org>, 2026.
 msgid ""
 msgstr ""
-"Project-Id-Version: ibus-anthy 1.5.15\n"
+"Project-Id-Version: ibus-anthy 1.5.16\n"
 "Report-Msgid-Bugs-To: https://github.com/ibus/ibus-anthy/issues\n"
 "POT-Creation-Date: 2025-02-17 17:13+0900\n"
-"PO-Revision-Date: 2026-02-09 17:58+0000\n"
-"Last-Translator: ButterflyOfFire "
-"<butterflyoffire@users.noreply.translate.fedoraproject.org>\n"
-"Language-Team: Kabyle <https://translate.fedoraproject.org/projects/ibus/"
-"ibus-anthy/kab/>\n"
-"Language: kab\n"
+"PO-Revision-Date: 2026-02-11 11:58+0000\n"
+"Last-Translator: A S Alam <aalam@users.noreply.translate.fedoraproject.org>\n"
+"Language-Team: Punjabi <https://translate.fedoraproject.org/projects/ibus/"
+"ibus-anthy/pa/>\n"
+"Language: pa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -25,7 +23,7 @@ msgstr ""
 
 #: data/ibus-anthy.appdata.xml.in:8
 msgid "Japanese input method"
-msgstr "Tarrayt n usekcem s japunit"
+msgstr "ਜਾਪਾਨੀ ਇਨਪੁੱਟ ਢੰਗ"
 
 #: data/ibus-anthy.appdata.xml.in:11 data/ibus-anthy.appdata.xml.in:39
 msgid "The Anthy input method is designed for entering Japanese text."
@@ -40,11 +38,11 @@ msgstr ""
 
 #: data/ibus-anthy.appdata.xml.in:21
 msgid "input-method"
-msgstr "tarrayt n usekcem"
+msgstr "ਇਨਪੁੱਟ-ਢੰਗ"
 
 #: data/ibus-anthy.appdata.xml.in:22
 msgid "Japanese"
-msgstr "Ajapuni"
+msgstr "ਜਾਪਾਨੀ"
 
 #: data/ibus-anthy.appdata.xml.in:31
 msgid "See the upstream release list."
@@ -62,11 +60,11 @@ msgstr ""
 #: engine/python2/engine.py:267 engine/python3/engine.py:268
 #: setup/python2/main.py:420 setup/python3/main.py:424
 msgid "Preferences - Anthy"
-msgstr "Imenyafen – Anthy"
+msgstr ""
 
 #: engine/python2/engine.py:269 engine/python3/engine.py:270
 msgid "Configure Anthy"
-msgstr "Swel Anthy"
+msgstr ""
 
 #. Translators: Specify the order of %s with your translation.
 #. It will be "Input Mode (A)" for example.
@@ -81,17 +79,17 @@ msgstr "Swel Anthy"
 #: engine/python3/engine.py:988 engine/python3/engine.py:1050
 #, python-format
 msgid "%(description)s (%(symbol)s)"
-msgstr "%(description)s (%(symbol)s)"
+msgstr ""
 
 #: engine/python2/engine.py:307 engine/python2/engine.py:910
 #: engine/python3/engine.py:308 engine/python3/engine.py:905
 #: setup/python2/main.py:405 setup/python3/main.py:409
 msgid "Input mode"
-msgstr "Tarrayt n usekcem"
+msgstr "ਇਨਪੁੱਟ ਢੰਗ"
 
 #: engine/python2/engine.py:313 engine/python3/engine.py:314
 msgid "Switch input mode"
-msgstr ""
+msgstr "ਇਨਪੁੱਟ ਢੰਗ ਨੂੰ ਬਦਲੋ"
 
 #: engine/python2/engine.py:323 engine/python3/engine.py:324
 #: setup/python2/setup.ui:17 setup/python3/setup.ui:17
@@ -111,7 +109,7 @@ msgstr ""
 #: engine/python2/engine.py:350 engine/python3/engine.py:351
 #: setup/python2/setup.ui:26 setup/python3/setup.ui:26
 msgid "Latin"
-msgstr "Talatinit"
+msgstr ""
 
 #: engine/python2/engine.py:359 engine/python3/engine.py:360
 #: setup/python2/setup.ui:29 setup/python3/setup.ui:29
@@ -123,11 +121,11 @@ msgstr ""
 #: engine/python3/engine.py:936 engine/python3/engine.py:960
 #: setup/python2/main.py:408 setup/python3/main.py:412
 msgid "Typing method"
-msgstr "Tarrayt n usekcem"
+msgstr "ਲਿਖਣ ਦਾ ਢੰਗ"
 
 #: engine/python2/engine.py:401 engine/python3/engine.py:402
 msgid "Switch typing method"
-msgstr ""
+msgstr "ਲਿਖਣ ਦੇ ਢੰਗ ਨੂੰ ਬਦਲੋ"
 
 #: engine/python2/engine.py:411 engine/python3/engine.py:412
 #: setup/python2/setup.ui:71 setup/python3/setup.ui:71
@@ -178,16 +176,16 @@ msgstr ""
 #: engine/python3/engine.py:539 engine/python3/engine.py:1051
 #: setup/python2/main.py:414 setup/python3/main.py:418
 msgid "Dictionary mode"
-msgstr "Askar n umawal"
+msgstr ""
 
 #: engine/python2/engine.py:544 engine/python3/engine.py:545
 msgid "Switch dictionary"
-msgstr "Beddel asegzawal"
+msgstr ""
 
 #: engine/python2/engine.py:634 engine/python3/engine.py:634
 #: setup/python2/main.py:417 setup/python3/main.py:421
 msgid "Dictionary - Anthy"
-msgstr "Amawal - Anthy"
+msgstr ""
 
 #. Translators: "Dic" means 'dictionary', One kanji may be good.
 #: engine/python2/engine.py:640 engine/python3/engine.py:639
@@ -196,11 +194,11 @@ msgstr ""
 
 #: engine/python2/engine.py:647 engine/python3/engine.py:646
 msgid "Configure dictionaries"
-msgstr "Swel imawalen"
+msgstr ""
 
 #: engine/python2/engine.py:657 engine/python3/engine.py:656
 msgid "Edit dictionaries"
-msgstr "Ẓreg imawalen"
+msgstr ""
 
 #: engine/python2/engine.py:659 engine/python3/engine.py:658
 msgid "Launch the dictionary tool"
@@ -208,16 +206,16 @@ msgstr ""
 
 #: engine/python2/engine.py:666 engine/python3/engine.py:665
 msgid "Add words"
-msgstr "Rnu awalen imaynuten"
+msgstr ""
 
 #: engine/python2/engine.py:668 engine/python3/engine.py:667
 msgid "Add words to the dictionary"
-msgstr "Rnu awalen ar umawal"
+msgstr ""
 
 #: setup/python2/anthyprefs.py:337 setup/python2/setup.ui:397
 #: setup/python3/anthyprefs.py:330 setup/python3/setup.ui:397
 msgid "General"
-msgstr "Amatu"
+msgstr ""
 
 #: setup/python2/anthyprefs.py:338 setup/python3/anthyprefs.py:331
 msgid "Zip Code Conversion"
@@ -225,7 +223,7 @@ msgstr ""
 
 #: setup/python2/anthyprefs.py:339 setup/python3/anthyprefs.py:332
 msgid "Symbol"
-msgstr "Izamulen"
+msgstr ""
 
 #: setup/python2/anthyprefs.py:340 setup/python3/anthyprefs.py:333
 msgid "Old Character Style"
@@ -237,7 +235,7 @@ msgstr ""
 
 #: setup/python2/anthyprefs.py:342 setup/python3/anthyprefs.py:335
 msgid "Emoji"
-msgstr "Imujit"
+msgstr ""
 
 #: setup/python2/ibus-setup-anthy.desktop.in.in:2
 #: setup/python3/ibus-setup-anthy.desktop.in.in:2
@@ -255,15 +253,15 @@ msgstr ""
 
 #: setup/python2/main.py:198 setup/python3/main.py:200
 msgid "Command"
-msgstr "Anzaḍ"
+msgstr ""
 
 #: setup/python2/main.py:202 setup/python3/main.py:204
 msgid "Shortcut"
-msgstr "Anegzum"
+msgstr ""
 
 #: setup/python2/main.py:247 setup/python3/main.py:249
 msgid "Description"
-msgstr "Aglam"
+msgstr ""
 
 #. Translators: "Embd" is an abbreviation of "embedded".
 #: setup/python2/main.py:255 setup/python3/main.py:257
@@ -291,15 +289,15 @@ msgstr ""
 
 #: setup/python2/main.py:501 setup/python3/main.py:505
 msgid "Single"
-msgstr "Asuf"
+msgstr ""
 
 #: setup/python2/main.py:503 setup/python3/main.py:507
 msgid "Left"
-msgstr "Azelmaḍ"
+msgstr ""
 
 #: setup/python2/main.py:505 setup/python3/main.py:509
 msgid "Right"
-msgstr "Ayeffus"
+msgstr ""
 
 #: setup/python2/main.py:587 setup/python3/main.py:591
 msgid "Customize Romaji Key Table"
@@ -320,7 +318,7 @@ msgstr ""
 #: setup/python3/main.py:594 setup/python3/main.py:1064
 #: setup/python3/main.py:1168 setup/python3/setup.ui:183
 msgid "Default"
-msgstr "Amezwer"
+msgstr ""
 
 #: setup/python2/main.py:593 setup/python3/main.py:597
 msgid "Customize Kana Key Table"
@@ -333,7 +331,7 @@ msgstr ""
 
 #: setup/python2/main.py:596 setup/python3/main.py:600
 msgid "Japanese Keyboard Layout"
-msgstr "Taneɣruft n unasiw ajapuni"
+msgstr ""
 
 #: setup/python2/main.py:597 setup/python3/main.py:601
 msgid "U.S. Keyboard Layout"
@@ -397,7 +395,7 @@ msgstr ""
 
 #: setup/python2/main.py:757 setup/python3/main.py:761
 msgid "The file you have chosen does not exist: "
-msgstr "Afaylu i tferneḍ ulac-it: "
+msgstr ""
 
 #: setup/python2/main.py:761 setup/python3/main.py:765
 msgid "Your choosed file is a directory: "
@@ -444,55 +442,55 @@ msgstr ""
 #: setup/python2/main.py:1374 setup/python2/main.py:1465
 #: setup/python3/main.py:1367 setup/python3/main.py:1458
 msgid "Your file does not exist: "
-msgstr "Afaylu-inek·inem ulac-it: "
+msgstr ""
 
 #: setup/python2/main.py:1385 setup/python3/main.py:1378
 msgid "Open Dictionary File"
-msgstr "Ldi-d afaylu n umawal"
+msgstr ""
 
 #: setup/python2/main.py:1388 setup/python2/main.py:1394
 #: setup/python2/setup.ui:2166 setup/python3/main.py:1381
 #: setup/python3/main.py:1387 setup/python3/setup.ui:2166
 msgid "_Cancel"
-msgstr "Semmet (_C)"
+msgstr ""
 
 #: setup/python2/main.py:1389 setup/python3/main.py:1382
 msgid "_Open"
-msgstr "Ldi (_O)"
+msgstr ""
 
 #: setup/python2/main.py:1392 setup/python3/main.py:1385
 msgid "Edit Dictionary File"
-msgstr "Senfel afaylu n umawal"
+msgstr ""
 
 #: setup/python2/main.py:1395 setup/python2/main.py:1485
 #: setup/python2/setup.ui:2181 setup/python3/main.py:1388
 #: setup/python3/main.py:1478 setup/python3/setup.ui:2181
 msgid "_OK"
-msgstr "IH (_O)"
+msgstr ""
 
 #: setup/python2/main.py:1407 setup/python3/main.py:1400
 msgid "Your choosed file is not correct."
-msgstr "Afaylu-inek·inem ufrin ur iṣeḥḥa ara."
+msgstr ""
 
 #: setup/python2/main.py:1437 setup/python3/main.py:1430
 msgid "You cannot delete the system dictionary."
-msgstr "Ur tezmireḍ ara ad tsefḍeḍ asegzawal n unagraw."
+msgstr ""
 
 #: setup/python2/main.py:1461 setup/python3/main.py:1454
 msgid "Your file is not good."
-msgstr "Ur yelhi ara ufaylu-inek·inem."
+msgstr ""
 
 #: setup/python2/main.py:1483 setup/python3/main.py:1476
 msgid "View Dictionary File"
-msgstr "Wali afaylu n umawal"
+msgstr ""
 
 #: setup/python2/main.py:1644 setup/python3/main.py:1637
 msgid "Please press a key (or a key combination)"
-msgstr "Ttxil-k sit ɣef tqeffalt (neɣ taggayt n tqeffalin)"
+msgstr ""
 
 #: setup/python2/main.py:1645 setup/python3/main.py:1638
 msgid "The dialog will be closed when the key is released"
-msgstr "Adiwenni ad yemdel mi ara d-teffeɣ tqeffalt"
+msgstr ""
 
 #: setup/python2/main.py:1665 setup/python2/main.py:1686
 #: setup/python3/main.py:1658 setup/python3/main.py:1679
@@ -506,19 +504,19 @@ msgstr ""
 
 #: setup/python2/setup.ui:39 setup/python3/setup.ui:39
 msgid "NICOLA-J"
-msgstr "NICOLA-J"
+msgstr ""
 
 #: setup/python2/setup.ui:42 setup/python3/setup.ui:42
 msgid "NICOLA-A"
-msgstr "NICOLA-A"
+msgstr ""
 
 #: setup/python2/setup.ui:45 setup/python3/setup.ui:45
 msgid "NICOLA-F"
-msgstr "NICOLA-F"
+msgstr ""
 
 #: setup/python2/setup.ui:55 setup/python3/setup.ui:55
 msgid "None"
-msgstr "Ula yiwet"
+msgstr ""
 
 #: setup/python2/setup.ui:58 setup/python3/setup.ui:58
 msgid "FMV KB231 key extension"
@@ -550,7 +548,7 @@ msgstr ""
 
 #: setup/python2/setup.ui:167 setup/python3/setup.ui:167
 msgid "Clear"
-msgstr "Sfeḍ"
+msgstr ""
 
 #: setup/python2/setup.ui:170 setup/python3/setup.ui:170
 msgid "Commit"
@@ -562,11 +560,11 @@ msgstr ""
 
 #: setup/python2/setup.ui:186 setup/python3/setup.ui:186
 msgid "ATOK"
-msgstr "ATOK"
+msgstr ""
 
 #: setup/python2/setup.ui:189 setup/python3/setup.ui:189
 msgid "Wnn"
-msgstr "Wnn"
+msgstr ""
 
 #: setup/python2/setup.ui:197 setup/python3/setup.ui:197
 msgid "Setup - IBus-Anthy"
@@ -574,19 +572,19 @@ msgstr ""
 
 #: setup/python2/setup.ui:233 setup/python3/setup.ui:233
 msgid "_Input Mode:"
-msgstr "A_naw n usekcem:"
+msgstr ""
 
 #: setup/python2/setup.ui:263 setup/python3/setup.ui:263
 msgid "_Typing Method:"
-msgstr "_Tarrayt n usekcem:"
+msgstr ""
 
 #: setup/python2/setup.ui:297 setup/python3/setup.ui:297
 msgid "Conversion _Mode:"
-msgstr "Askar n udi_wenni:"
+msgstr ""
 
 #: setup/python2/setup.ui:332 setup/python3/setup.ui:332
 msgid "<b>Initial Setting</b>"
-msgstr "<b>Tawila tamezwarut</b>"
+msgstr ""
 
 #: setup/python2/setup.ui:381 setup/python3/setup.ui:381
 msgid "<b>Menu Visibility on Status Icon</b>"
@@ -640,11 +638,11 @@ msgstr ""
 
 #: setup/python2/setup.ui:726 setup/python3/setup.ui:726
 msgid "<b>Other</b>"
-msgstr "<b>Wayeḍ</b>"
+msgstr ""
 
 #: setup/python2/setup.ui:742 setup/python3/setup.ui:742
 msgid "Conversion"
-msgstr "Aselket"
+msgstr ""
 
 #: setup/python2/setup.ui:764 setup/python3/setup.ui:764
 msgid "_Shortcut Type:"
@@ -657,7 +655,7 @@ msgstr ""
 #: setup/python2/setup.ui:847 setup/python2/setup.ui:1763
 #: setup/python3/setup.ui:847 setup/python3/setup.ui:1763
 msgid "_Edit"
-msgstr "Ẓr_eg"
+msgstr ""
 
 #: setup/python2/setup.ui:873 setup/python3/setup.ui:873
 msgid "Key Binding"
@@ -673,11 +671,11 @@ msgstr ""
 
 #: setup/python2/setup.ui:1066 setup/python3/setup.ui:1066
 msgid "Keyboad _layout:"
-msgstr "Taneɣru_ft n unasiw:"
+msgstr ""
 
 #: setup/python2/setup.ui:1108 setup/python3/setup.ui:1108
 msgid "<b>Keyboard layout</b>"
-msgstr "<b>Taneɣruft n unasiw</b>"
+msgstr ""
 
 #: setup/python2/setup.ui:1127 setup/python3/setup.ui:1127
 msgid "Typing Method"
@@ -766,22 +764,22 @@ msgstr ""
 
 #: setup/python2/setup.ui:1731 setup/python3/setup.ui:1731
 msgid "_View"
-msgstr "_Wali"
+msgstr "ਵੇਖੋ(_V)"
 
 #: setup/python2/setup.ui:1747 setup/python2/setup.ui:2099
 #: setup/python2/setup.ui:2373 setup/python3/setup.ui:1747
 #: setup/python3/setup.ui:2099 setup/python3/setup.ui:2373
 msgid "_Add"
-msgstr "Rnu (_A)"
+msgstr "ਜੋੜੋ(_A)"
 
 #: setup/python2/setup.ui:1779 setup/python2/setup.ui:2132
 #: setup/python3/setup.ui:1779 setup/python3/setup.ui:2132
 msgid "_Delete"
-msgstr "Kkes (_D)"
+msgstr "ਹਟਾਓ(_D)"
 
 #: setup/python2/setup.ui:1808 setup/python3/setup.ui:1808
 msgid "_Up"
-msgstr "_Usawen"
+msgstr "ਉੱਤੇ(_U)"
 
 #: setup/python2/setup.ui:1810 setup/python2/setup.ui:1827
 #: setup/python3/setup.ui:1810 setup/python3/setup.ui:1827
@@ -790,7 +788,7 @@ msgstr ""
 
 #: setup/python2/setup.ui:1825 setup/python3/setup.ui:1825
 msgid "_Down"
-msgstr "Ukessar (_D)"
+msgstr ""
 
 #: setup/python2/setup.ui:1852 setup/python3/setup.ui:1852
 msgid "<b>Extended Dictionaries</b>"
@@ -798,28 +796,28 @@ msgstr ""
 
 #: setup/python2/setup.ui:1867 setup/python3/setup.ui:1867
 msgid "Dictionary"
-msgstr "Asegzawal"
+msgstr "ਸ਼ਬਦ-ਕੋਸ਼"
 
 #: setup/python2/setup.ui:1888 setup/python3/setup.ui:1888
 msgid "About"
-msgstr "Ɣef"
+msgstr "ਇਸ ਬਾਰੇ"
 
 #: setup/python2/setup.ui:1908 setup/python2/setup.ui:2418
 #: setup/python3/setup.ui:1908 setup/python3/setup.ui:2418
 msgid "_Close"
-msgstr "Mdel (_C)"
+msgstr "ਬੰਦ ਕਰੋ(_C)"
 
 #: setup/python2/setup.ui:1938 setup/python3/setup.ui:1938
 msgid "Edit Shortcut"
-msgstr "Ẓreg anegzum"
+msgstr ""
 
 #: setup/python2/setup.ui:1980 setup/python3/setup.ui:1980
 msgid "Key Code:"
-msgstr "Angal n tqeffalt:"
+msgstr ""
 
 #: setup/python2/setup.ui:2028 setup/python3/setup.ui:2028
 msgid "Modifier:"
-msgstr "Asenfal:"
+msgstr ""
 
 #: setup/python2/setup.ui:2042 setup/python3/setup.ui:2042
 msgid "A_lternate"
@@ -835,7 +833,7 @@ msgstr ""
 
 #: setup/python2/setup.ui:2116 setup/python3/setup.ui:2116
 msgid "_Refresh"
-msgstr "Smi_ren"
+msgstr ""
 
 #: setup/python2/setup.ui:2293 setup/python3/setup.ui:2293
 msgid "_Input Characters"
@@ -855,7 +853,7 @@ msgstr ""
 
 #: setup/python2/setup.ui:2387 setup/python3/setup.ui:2387
 msgid "_Remove"
-msgstr "Kkes (_R)"
+msgstr "ਹਟਾਓ(_R)"
 
 #: setup/python2/setup.ui:2607 setup/python3/setup.ui:2607
 msgid "_Short Label:"
@@ -863,7 +861,7 @@ msgstr ""
 
 #: setup/python2/setup.ui:2631 setup/python3/setup.ui:2631
 msgid "_Description:"
-msgstr "Aglam (_D):"
+msgstr ""
 
 #: setup/python2/setup.ui:2663 setup/python3/setup.ui:2663
 msgid "_Use your dictionary alone with switching dictionaries"
@@ -883,4 +881,4 @@ msgstr ""
 
 #: setup/python2/setup.ui:2719 setup/python3/setup.ui:2719
 msgid "translator_credits"
-msgstr "Athmane Mokraoui <butterflyoffire@protonmail.com>"
+msgstr ""
