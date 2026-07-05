@@ -89,7 +89,8 @@ era.stamp:
 	    if ! $(PYTHON) $(srcdir)/era.py --check $(srcdir)/era.t ; then \
 	        rm $(srcdir)/era.t; \
 	        $(PYTHON) $(srcdir)/era.py $(srcdir)/era.t.in \
-                    --output $(builddir)/era.t; \
+                    --output $(builddir)/era.t \
+					|| exit 1; \
 	        echo "Generate era.t"; \
 	    fi; \
 	fi; \
