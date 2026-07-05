@@ -1821,8 +1821,9 @@ class Engine(IBus.EngineSimple):
                 return ret
             except:
                 pass
-        
-        def __cmd_exec(key, keyval, state):
+
+        def __cmd_exec(pair, keyval, state):
+            key = repr(pair)
             for cmd in self.__keybind.get(key, []):
                 if config.DEBUG:
                     print 'cmd =', cmd
@@ -1834,28 +1835,26 @@ class Engine(IBus.EngineSimple):
             return False
 
         def cmd_exec(keyval, state=0):
-            key = self._mk_key(keyval, state)
-            pair = eval(key)
+            pair = self._adjust_for_shift(keyval, state)
             self._MS = pair[0]
             self._CM = pair[1]
-            return __cmd_exec(key, keyval, state)
-        
+            return __cmd_exec(pair, keyval, state)
+
         def cmd_term(keyval, state=0):
             if self._MS == 0 and self._CM == 0:
                 return False
 
-            key = self._mk_key(keyval, state)
-            pair = eval(key)
+            pair = self._adjust_for_shift(keyval, state)
 
             prev_keyval = self._CM | IBus.ModifierType.RELEASE_MASK
             prev_state = self._MS | IBus.ModifierType.RELEASE_MASK
-            prev_key = repr([int(prev_state), int(prev_keyval)])
+            prev_pair = [int(prev_state), int(prev_keyval)]
 
             self._MS = 0
             self._CM = 0
 
-            __cmd_exec(prev_key, prev_keyval, prev_state)
-            return __cmd_exec(key, pair[1], pair[0])
+            __cmd_exec(prev_pair, prev_keyval, prev_state)
+            return __cmd_exec(pair, pair[1], pair[0])
 
         def RS():
             return self.__thumb.get_rs()
