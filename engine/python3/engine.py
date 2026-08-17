@@ -1895,6 +1895,7 @@ class Engine(IBus.EngineSimple):
                 self._RSS = 0
             elif keyval == self._RMM:
                 self._RMM = 0
+            return False
         else:
             if keyval in [LS(), RS()] and state == 0:
                 if self._SS:
