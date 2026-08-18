@@ -66,6 +66,17 @@ printerr = AnthyPrefs.printerr
 ANTHY_CONFIG_PATH = get_userhome() + '/.anthy' if config.ANTHY_PC == 'anthy' \
     else GLib.get_user_config_dir() + '/anthy';
 
+# Shift, Alt and Super keys
+ANTHY_NO_OUTPUT_MODIFIERS = (
+    IBus.ModifierType.CONTROL_MASK |
+    IBus.ModifierType.MOD1_MASK |
+    IBus.ModifierType.MOD4_MASK
+)
+ANTHY_SHORTCUT_MODIFIERS = (
+    ANTHY_NO_OUTPUT_MODIFIERS |
+    IBus.ModifierType.SHIFT_MASK
+)
+
 INPUT_MODE_HIRAGANA, \
 INPUT_MODE_KATAKANA, \
 INPUT_MODE_HALF_WIDTH_KATAKANA, \
@@ -1844,17 +1855,14 @@ class Engine(IBus.EngineSimple):
         def T2():
             return self.__thumb.get_t2()
 
-        state = state & (IBus.ModifierType.SHIFT_MASK |
-                         IBus.ModifierType.CONTROL_MASK |
-                         IBus.ModifierType.MOD1_MASK |
-                         IBus.ModifierType.MOD4_MASK |
-                         IBus.ModifierType.RELEASE_MASK)
+        is_press = (state | IBus.ModifierType.RELEASE_MASK) == 0
+        state &= ANTHY_SHORTCUT_MODIFIERS
 
         if keyval in KP_Table and self.__prefs.get_value('common',
                                                          'ten-key-mode'):
             keyval = KP_Table[keyval]
 
-        if state & IBus.ModifierType.RELEASE_MASK:
+        if not is_press:
             if keyval == self._MM:
                 if stop():
                     insert(self.__thumb.get_char(self._MM)[self._SS])
@@ -1915,10 +1923,9 @@ class Engine(IBus.EngineSimple):
                     cmd_exec([0, RS(), LS()][self._SS])
                 if cmd_exec(keyval, state):
                     return True
-                elif 0x21 <= keyval <= 0x7e and state & \
-                        (IBus.ModifierType.CONTROL_MASK |
-                         IBus.ModifierType.MOD1_MASK |
-                         IBus.ModifierType.MOD4_MASK) == 0:
+                if state & ANTHY_NO_OUTPUT_MODIFIERS == 0:
+                    return False
+                if 0x21 <= keyval <= 0x7e:
                     if state & IBus.ModifierType.SHIFT_MASK:
                         insert(self.__thumb.get_shift_char(keyval, unichr(keyval)))
                     elif self._SS == 0:
@@ -1940,10 +1947,7 @@ class Engine(IBus.EngineSimple):
 
         is_press = (state & IBus.ModifierType.RELEASE_MASK) == 0
 
-        state = state & (IBus.ModifierType.SHIFT_MASK |
-                         IBus.ModifierType.CONTROL_MASK |
-                         IBus.ModifierType.MOD1_MASK |
-                         IBus.ModifierType.MOD4_MASK)
+        state &= ANTHY_SHORTCUT_MODIFIERS
 
         # ignore key release events
         if not is_press:
