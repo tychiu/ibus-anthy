@@ -260,6 +260,8 @@ class Engine(IBus.EngineSimple):
         self._H = 0
         self._RMM = 0
         self._RSS = 0
+        self._MS = 0 # modifier state
+        self._CM = 0 # command memory
         if self.__idle_id != 0:
             GLib.source_remove(self.__idle_id)
             self.__idle_id = 0
@@ -1806,6 +1808,11 @@ class Engine(IBus.EngineSimple):
 
     @staticmethod
     def _mk_key(keyval, state):
+        pair = Engine._adjust_for_shift(keyval, state)
+        return repr(pair)
+
+    @staticmethod
+    def _adjust_for_shift(keyval, state):
         if state & (IBus.ModifierType.CONTROL_MASK | IBus.ModifierType.MOD1_MASK):
             if keyval < 0xff and \
                chr(keyval) in '!"#$%^\'()*+,-./:;<=>?@[\\]^_`{|}~':
@@ -1813,7 +1820,7 @@ class Engine(IBus.EngineSimple):
             elif IBus.KEY_a <= keyval <= IBus.KEY_z:
                 keyval -= (IBus.KEY_a - IBus.KEY_A)
 
-        return repr([int(state), int(keyval)])
+        return [int(state), int(keyval)]
 
     def __process_key_event(self, obj, keyval, keycode, state):
         try:
@@ -1860,8 +1867,8 @@ class Engine(IBus.EngineSimple):
             except:
                 pass
 
-        def cmd_exec(keyval, state=0):
-            key = self._mk_key(keyval, state)
+        def __cmd_exec(pair, keyval, state):
+            key = repr(pair)
             for cmd in self.__keybind.get(key, []):
                 if config.DEBUG:
                     print('cmd =', cmd)
@@ -1871,6 +1878,28 @@ class Engine(IBus.EngineSimple):
                 except Exception as err:
                     printerr('Error command: %s: %s' % (cmd, str(err)))
             return False
+
+        def cmd_exec(keyval, state=0):
+            pair = self._adjust_for_shift(keyval, state)
+            self._MS = pair[0]
+            self._CM = pair[1]
+            return __cmd_exec(pair, keyval, state)
+
+        def cmd_term(keyval, state=0):
+            if self._MS == 0 and self._CM == 0:
+                return False
+
+            pair = self._adjust_for_shift(keyval, state)
+
+            prev_keyval = self._CM | IBus.ModifierType.RELEASE_MASK
+            prev_state = self._MS | IBus.ModifierType.RELEASE_MASK
+            prev_pair = [int(prev_state), int(prev_keyval)]
+
+            self._MS = 0
+            self._CM = 0
+
+            __cmd_exec(prev_pair, prev_keyval, prev_state)
+            return __cmd_exec(pair, pair[1], pair[0])
 
         def RS():
             return self.__thumb.get_rs()
@@ -1904,6 +1933,12 @@ class Engine(IBus.EngineSimple):
                 self._RSS = 0
             elif keyval == self._RMM:
                 self._RMM = 0
+            elif keyval not in self.__thumb.get_chars() or state != 0:
+                if cmd_term(keyval, state):
+                    return True
+                elif not self.__preedit_ja_string.is_empty():
+                    return True
+                return False
         else:
             if keyval in [LS(), RS()] and state == 0:
                 if self._SS:
