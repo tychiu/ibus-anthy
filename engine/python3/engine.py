@@ -1952,14 +1952,14 @@ class Engine(IBus.EngineSimple):
                     cmd_exec([0, RS(), LS()][self._SS])
                 if cmd_exec(keyval, state):
                     return True
-                is_alphabet_key = 0x21 <= keyval <= 0x7e and state & ANTHY_NO_OUTPUT_MODIFIERS == 0
-                if is_alphabet_key:
+                if state & ANTHY_NO_OUTPUT_MODIFIERS:
+                    return False
+                if 0x21 <= keyval <= 0x7e:
                     if state & IBus.ModifierType.SHIFT_MASK:
                         insert(self.__thumb.get_shift_char(keyval, chr(keyval)))
                     elif self._SS == 0:
                         insert(chr(keyval))
                 else:
-                    # when waiting for commit, eat any key press for a any control character (e.g. Enter, PgUp, PgDn)
                     if not self.__preedit_ja_string.is_empty():
                         return True
                     return False
